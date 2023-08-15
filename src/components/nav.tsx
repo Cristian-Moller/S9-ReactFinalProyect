@@ -21,10 +21,8 @@ export function Nav({children}: Props){
   }
 
   return (
-    /*  */
     <nav className="mx-auto dark:bg-gray-700 dark:text-white sticky inset-0 z-10 block h-max w-full max-w-full rounded-none border border-white/80 bg-white bg-opacity-80 py-2 px-4 text-white shadow-md backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4" >
       <div>
-
         <div className="container mx-auto justify-between flex items-center text-gray-900 dark:text-white" >
           <a
             href="#"
@@ -36,18 +34,34 @@ export function Nav({children}: Props){
             <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
               <Link className="flex items-center" to="/" >Home</Link>
             </li>
-            <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-              <Link className="flex items-center" to="/client" >Client</Link>
-            </li>
-            <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-              <Link className="flex items-center" to="/carrito" >Carrito</Link>
-            </li>
-            <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-              <Link className="flex items-center" to="/add" >Add User</Link>
-            </li>
-            <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-              <Link className="flex items-center" to="/addproducts" >Add Products</Link>
-            </li>
+
+            { authContext?.user &&
+              <>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/client" >Client</Link>
+                </li>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/carrito" >Carrito</Link>
+                </li>
+              </>
+            }
+
+            { (authContext?.user && 
+              authContext?.user?.permissions.includes('write')) && 
+            
+              <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                <Link className="flex items-center" to="/addproducts" >Add Products</Link>
+              </li>
+            }
+
+            { (authContext?.user && 
+              authContext?.user?.permissions.includes('write')
+              && authContext?.user?.rol.includes('admin')) &&
+
+              <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                <Link className="flex items-center" to="/add" >Add User</Link>
+              </li>
+            }
 
             <li className="block p-1 font-sans text-lg font-normal leading-normal text-inherit antialiased gap-3 lg:flex items-center">
               {!authContext?.user ? 
@@ -90,7 +104,6 @@ export function Nav({children}: Props){
               </button>
             </li>
           </ul>
-
           
           <button
             className="middle none relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] rounded-lg text-center font-sans text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden text-gray-500 dark:text-gray-400"

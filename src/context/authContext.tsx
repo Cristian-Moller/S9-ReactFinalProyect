@@ -27,7 +27,7 @@ export type AuthContext = {
 
 export const authContext = createContext<AuthContext | null>(null)
 
-export const useAuth = () => {
+export const useAuth = (): AuthContext | null => {
   const context = useContext(authContext)
   return context
 }
@@ -56,8 +56,6 @@ export const AuthProvider : React.FC<Props> = ({ children}) =>  {
   useEffect(() => {
     
       onAuthStateChanged(auth, (currentUser: User | null) => {
-        /* where("permissions", "array-contains", "read" && "write") */
-        //console.log('curent', currentUser)
         
         const q = query(collection(db, "users"), where("email", "==", currentUser?.email || ''));
         onSnapshot(q, (snapshot) => {

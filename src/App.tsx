@@ -18,7 +18,7 @@ function App(): JSX.Element {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Nav />
+        <Nav children={undefined} />
         <Routes>
           <Route path='/' element={<Home /> } />
           <Route element={

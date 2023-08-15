@@ -20,7 +20,6 @@ export function Logout() {
         type="button"
         data-ripple-light="true"
       >
-      
         Logout
       </button>
     </>
