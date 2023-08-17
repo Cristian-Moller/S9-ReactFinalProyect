@@ -12,7 +12,6 @@ export const ProtectedRoute: React.FC<Props> = ({ isAllowed, children, redirectT
   if(authContext?.loading) return <h3>Loading...</h3>
 
   if(!isAllowed) return <Navigate to={redirectTo} />
-  
 
   return (
     <>

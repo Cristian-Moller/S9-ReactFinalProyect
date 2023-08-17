@@ -1,19 +1,31 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, redirect } from 'react-router-dom'
 import { Home } from './pages/home'
 import { Register } from './components/register'
 import { Login } from './components/login'
 import { AuthProvider, useAuth } from "./context/authContext";
 import { ProtectedRoute } from './components/protectedRoute';
-import { AdminView } from './components/adminView';
+import { AdminView } from './pages/adminView';
 import { Nav } from './components/nav';
-import { Carrito } from './components/carrito';
+import Cart  from './components/carrito';
 import { Client } from './components/client';
-import { AddProducts } from './components/addProducts';
+import { AddProducts } from './pages/addProducts';
 import { ThemeProvider } from './context/themeContext';
+import CartService from './services/cart.service';
+
 
 function App(): JSX.Element {
-
+  const cartService = new CartService()
   const authContext = useAuth();
+
+  function isAllowed(permission: string, role?: string): boolean  {
+    if(role) {
+      return authContext !== null && authContext.user !== null 
+              && authContext?.user?.permissions.includes(permission)
+              && authContext?.user?.role.includes(role)
+    }
+    return authContext !== null && authContext.user !== null 
+      && authContext?.user?.permissions.includes(permission)
+  }
 
   return (
     <ThemeProvider>
@@ -23,21 +35,18 @@ function App(): JSX.Element {
           <Route path='/' element={<Home /> } />
           <Route element={
               <ProtectedRoute 
-                isAllowed={!!authContext?.user}
+                isAllowed={isAllowed('read')}
                 redirectTo='/'
               />
             }
           >
             <Route path='/client' element={<Client /> } />
-            <Route path='/carrito' element={<Carrito /> } />
+            <Route path='/carrito' element={<Cart cartService={cartService} /> } />
           </Route>
           
           <Route path='/add' element={
             <ProtectedRoute 
-              isAllowed={!!authContext?.user 
-                && authContext?.user?.permissions.includes('write')
-                && authContext?.user?.rol.includes('admin')
-              }
+              isAllowed={isAllowed('write', 'admin')} 
               redirectTo='/client'
             >
               <AdminView />
@@ -45,9 +54,7 @@ function App(): JSX.Element {
           }/>
           <Route path='/addproducts' element={
             <ProtectedRoute 
-              isAllowed={!!authContext?.user
-                && authContext?.user?.permissions.includes('write')
-              }
+              isAllowed={isAllowed('write')}
               redirectTo='/client'
             >
               <AddProducts />

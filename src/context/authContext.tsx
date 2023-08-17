@@ -12,14 +12,17 @@ import {
 
 import { auth, db } from "../firebase";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { IUser } from "../type/interface";
+import UserService from "../services/users.service";
 interface Props {
   children: React.ReactNode
 }
 
+const userService = new UserService();
 export type AuthContext = {
   signup: (email: string, password: string) => Promise<void>, 
   login: (email: string, password: string) => Promise<void>,
-  user: User | null, 
+  user: IUser | null, 
   logout: () => Promise<void>, 
   loading: boolean, 
   loginWithGoogle: () => Promise<UserCredential>,
@@ -33,7 +36,7 @@ export const useAuth = (): AuthContext | null => {
 }
 
 export const AuthProvider : React.FC<Props> = ({ children}) =>  {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<IUser | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
   const signup = async (email: string, password: string): Promise<void> => {
@@ -41,7 +44,16 @@ export const AuthProvider : React.FC<Props> = ({ children}) =>  {
   }
 
   const login = async (email: string, password: string): Promise<void> => {
-    await signInWithEmailAndPassword(auth, email, password)
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    if(userCredential){
+      if(userCredential.user !== null && userCredential.user.email !== null) {
+        const loggedUser = await userService.getUserByEmail(userCredential.user.email)
+
+        if(loggedUser !== null) {
+          setUser(loggedUser)
+        }
+      }
+    }
   }
 
   const logout = async () : Promise<void> => {
@@ -54,12 +66,10 @@ export const AuthProvider : React.FC<Props> = ({ children}) =>  {
   }
 
   useEffect(() => {
-    
       onAuthStateChanged(auth, (currentUser: User | null) => {
-        
         const q = query(collection(db, "users"), where("email", "==", currentUser?.email || ''));
         onSnapshot(q, (snapshot) => {
-          const getUser: User[] = snapshot.docs.map((doc) => doc.data() as User );
+          const getUser: IUser[] = snapshot.docs.map((doc) => doc.data() as IUser );
           setUser(getUser[0])
         });
         setLoading(false)

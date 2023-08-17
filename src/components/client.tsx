@@ -1,6 +1,5 @@
 
 export function Client() {
-
   
   return (
     <>

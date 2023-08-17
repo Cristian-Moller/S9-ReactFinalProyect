@@ -2,20 +2,21 @@ import { useState } from "react"
 import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { IUser } from "../type/interface";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../firebase";
+import UserService from "../services/users.service";
+import { UserCredential } from "firebase/auth";
 
 export function Login(): JSX.Element {
+  const userService = new UserService();
 
   const [ user, setUser ] = useState<IUser>({
+    id: '',
     email: '',
     password: '',
     permissions: ['read'],
-    rol: 'client'
+    role: 'client'
   })
  
   const authContext = useAuth();
-
   const navigate = useNavigate()
   const [ error, setError] = useState<string | null>()
 
@@ -23,44 +24,51 @@ export function Login(): JSX.Element {
     setUser({...user, [name]: value})
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
-    authContext?.login(user.email, user.password)
-    .then(() => navigate('/client'))
+    await authContext?.login(user.email, user.password)
+    .then(() => {
+      navigate("/addproducts")
+    })
     .catch(error => {
       if (error instanceof Error) setError(error.message)
       else setError('Something goes wrong!')
     })
   }
 
-  const handleGoogleSignin = () => {
-    authContext?.loginWithGoogle()
-    .then(async (result) => {
-      const getUserByEmail = query(collection(db, 'users'), where("email", "==", result.user.email))
-      
-      const querySnapshot = await getDocs(getUserByEmail)
-      if(querySnapshot.docs.length == 0) {
-        addDoc(collection(db, 'users'), {
-          email: result.user.email,
-          permissions: user.permissions,
-          rol: user.rol
-        })
-        .catch(error => {
-          if (error instanceof Error) setError(error.message)
-          else setError('Something goes wrong!')
-        })
-        navigate('/client')
-      } else {
-        navigate('/client')
-      }
-    })
+  const handleGoogleSignin = async () => { 
+    const newUser: IUser = {...user};
+    const googleUser: UserCredential | null | undefined = await authContext?.loginWithGoogle()
+      .catch((error: Error) => {
+        setError(error.message)
+        return null
+      })
 
-    .catch(error => {
-      if (error instanceof Error) setError(error.message)
-      else setError('Something goes wrong!')
-    })
-    
+    if(!googleUser) {
+      setError("invalid user")
+      return;
+    }
+
+    if(googleUser === null) {
+      setError("invalid user")
+      return;
+    }
+
+    if(googleUser.user.email === null) {
+      setError("invalid user")
+      return;
+    }
+
+    newUser.email = googleUser.user.email
+        
+    const addUserError = await userService.updateUserData(newUser)
+       
+    if(addUserError !== null) {
+      setError(addUserError)
+    }
+    navigate('/addproducts')
+
   }
 
   return (

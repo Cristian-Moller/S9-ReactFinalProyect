@@ -8,11 +8,12 @@ type Props = {
   children: React.ReactNode;
 }
 
-export function Nav({children}: Props){
+export function Nav({ children }: Props){
   const authContext = useAuth();
   const {theme, ToggleTheme} = useContext(ThemeContext)
 
-  const menuNavbar = useRef<HTMLDivElement>()
+  const menuNavbar = useRef<HTMLDivElement | null>()
+  
 
   const changeMenuHidden = () => {
     menuNavbar.current?.classList.toggle("overflow-hidden")
@@ -56,7 +57,7 @@ export function Nav({children}: Props){
 
             { (authContext?.user && 
               authContext?.user?.permissions.includes('write')
-              && authContext?.user?.rol.includes('admin')) &&
+              && authContext?.user?.role.includes('admin')) &&
 
               <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
                 <Link className="flex items-center" to="/add" >Add User</Link>

@@ -1,10 +1,21 @@
+import CartService from "../services/cart.service"
 
-export function Carrito() {
+interface ServiceProps{
+  cartService: CartService
+}
+const Cart: React.FC<ServiceProps> = (props) => {
 
-  
+  const addProduct = () => {
+    props.cartService.addItem('producto 1');
+
+    console.log(props.cartService.getCart());
+  }
+
   return (
     <>
-      <h2>Soy el Carrito</h2>
+      <button onClick={addProduct}>ADD item</button>
     </>
   )
 }
+
+export default Cart

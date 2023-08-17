@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../context/authContext";
 import { IUser } from "../type/interface";
-
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  /* deleteDoc, */
-  getDoc,
-  setDoc
-} from "firebase/firestore";
-import { db } from "../firebase";
+import UserService from "../services/users.service";
 
 export function AdminView(): JSX.Element {
+  const userService = new UserService();
 
   const initialValue = {
+    id: '',
     email: '',
     password: '',
     permissions: [''],
-    rol: ''
+    role: ''
   }
   const [ user, setUser ] = useState<IUser>(initialValue)
   
@@ -36,78 +28,38 @@ export function AdminView(): JSX.Element {
 
   const handleChange = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     
-    if (name === 'rol') setSelected(value);
+    if (name === 'role') setSelected(value);
     setUser({...user, [name]: value})
   }
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
 
-    if (subId === '' && user.rol == "client") {
-      authContext?.signup(user.email, user.password)
-      .then(() => addDoc(collection(db, 'users'), {
-          email: user.email,
-          permissions: ["read"],
-          rol: user.rol  
-      }))
-      .catch(error => {
-        if (error instanceof Error) setError(error.message)
-        else setError('Something goes wrong!')
-      })
-    } else if(subId === '' && user.rol == "helper") {
-      authContext?.signup(user.email, user.password)
-      .then(() => addDoc(collection(db, 'users'), {
-        email: user.email,
-        permissions: ["read","write"],
-        rol: user.rol
-      }))
-      .catch(error => {
-        if (error instanceof Error) setError(error.message)
-        else setError('Something goes wrong!')
-      })
-    } else if(subId != '' && user.rol == "helper") {
-      await setDoc(doc(db, 'users', subId), {
-        email: user.email,
-        permissions: ["read","write"],
-        rol: user.rol
-      })
-    } else if(subId != '' && user.rol == "client") {
-      await setDoc(doc(db, 'users', subId), {
-        email: user.email,
-        permissions: ["read"],
-        rol: user.rol
-      })
-    } 
+    const error = await userService.addUser(user, subId);
+
+    if(error !== null) {
+      setError(error)
+    }
+
     setUser({...initialValue})
-    setSelected(initialValue.rol)
+    setSelected(initialValue.role)
     setSubId('')
+    await getUserList()
   }
 
   // traigo el usuario desde firebase
-  const [userList, setUserList] = useState<Array<[]>>([])
+  const [userList, setUserList] = useState<Array<IUser>>([])
   const [subId, setSubId] = useState<string>('')
 
   /* const deleteUser = async (id: string) => {
     await deleteDoc(doc(db, 'users', id))
   } */
 
-  type listProps = {
-    id: string;
-    rol:string;
-    email:string;
-    permissions: {
-      [0]: string;
-      [1]?: string;
-    }
-  }
-
-  function helperList(): React.ReactElement[] {
-    const users = userList.map((list: listProps[] , index: number) => (
+  function mapUserList(role: string): React.ReactElement[] {
+    const users = userList.filter(user => user.role === role).map((user: IUser, index: number) => (
       <div key={index} className="">
-        { list.rol === 'helper' &&
           <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-1 dark:bg-gray-800 dark:border-gray-700">
-            
             <div className="flow-root">
               <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
                 <li className="py-1 sm:py-2">
@@ -115,20 +67,20 @@ export function AdminView(): JSX.Element {
                     
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                        {list.email}
+                        {user.email}
                       </p>
                       <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        Rol: {list.rol}
+                        Role: {user.role}
                       </p>
                       <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        Permissions: {list.permissions.join('-')}
+                        Permissions: {user.permissions.join('-')}
                       </p>
                     </div>
                     <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                       {/* <button onClick={() => deleteUser(list.id)}>
                             Delete
                           </button> */}
-                      <button onClick={() => setSubId(list.id)}>
+                      <button onClick={() => setSubId(user.id)}>
                         Edit
                       </button>
                     </div>
@@ -137,61 +89,25 @@ export function AdminView(): JSX.Element {
               </ul>
             </div>
           </div>
-        }
-      </div>
-    ))
-    return users
-  }
-  function clientList(): React.ReactElement[] {
-    const users = userList.map((list: object[], index: number) => (
-      <div key={index} className="">
-        { (list.rol === 'client') &&
-          <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-1 dark:bg-gray-800 dark:border-gray-700">
-            
-            <div className="flow-root">
-              <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-                <li className="py-1 sm:py-2">
-                  <div className="flex items-center space-x-4">
-                    
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                        {list.email}
-                      </p>
-                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        Rol: {list.rol}
-                      </p>
-                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        Permissions: {list.permissions.join('-')}
-                      </p>
-                    </div>
-                    <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                      {/* <button onClick={() => deleteUser(list.id)}>
-                            Delete
-                          </button> */}
-                      <button onClick={() => setSubId(list.id)}>
-                        Edit
-                      </button>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        }
       </div>
     ))
     return users
   }
 
   const getOne = async (id: string) => {
-    try {
-      const docRef = doc(db, 'users', id)
-      const docSnap = await getDoc(docRef)
-      setUser(docSnap.data())
-      setSelected(docSnap.data().rol)
-    } catch (error) {
-      console.error(error)
+    const user = await userService.getUser(id)
+    if(user === null) {
+      console.error('user not found')
+      return
     }
+
+    setUser(user)
+    setSelected(user.role)
+  }
+
+  const getUserList = async(): Promise<void> =>{
+   const users = await userService.getUserList()
+   setUserList(users)
   }
 
   useEffect(() => {
@@ -201,20 +117,8 @@ export function AdminView(): JSX.Element {
   }, [subId])
 
   useEffect(() => {
-    const getUserList = async(): Promise<void> =>{
-      try {
-        const querySnapshot = await getDocs(collection(db, 'users'))
-        const docs: Array<[]> = []
-        querySnapshot.forEach((doc) => {
-          docs.push({...doc.data(), id:doc.id})
-        })
-        setUserList(docs)
-      } catch (error) {
-        console.error(error)
-      }
-    }
     void getUserList()
-  }, [/* lista */])
+  }, [])
 
   return (
     <div className="bg-[url('src/assets/image2.jpg')] bg-cover flex flex-row flex-wrap" >
@@ -244,7 +148,7 @@ export function AdminView(): JSX.Element {
                   <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Rol </label>
                   <select 
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    name='rol'
+                    name='role'
                     value={selected}
                     onChange={handleChange}
                     required>
@@ -272,7 +176,6 @@ export function AdminView(): JSX.Element {
                 >
                   {subId === '' ? 'Add Helper or Client' : 'Edit User'}
                 </button>
-
               </form>
             </div>
           </div>
@@ -294,7 +197,7 @@ export function AdminView(): JSX.Element {
                     Clients
                   </h1>
                   <div className="h-5/6 overflow-auto">
-                    {clientList()}
+                    {mapUserList('client')}
                   </div>
                 </div>
                 <div className="md:w-1/2 p-1 pt-0 m-0 lg:h-96 w-full" >
@@ -302,7 +205,7 @@ export function AdminView(): JSX.Element {
                     Helpers
                   </h1>
                   <div className="h-5/6 overflow-auto">
-                    {helperList()}
+                    {mapUserList('helper')}
                   </div>
                 </div>
               </div>
