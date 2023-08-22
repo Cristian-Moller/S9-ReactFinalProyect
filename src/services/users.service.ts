@@ -3,8 +3,8 @@ import { IUser } from "../type/interface";
 import { db } from "../firebase";
 
 export default class UserService {
-  async addUser(user : IUser, subId: string) : Promise<string | null> {
-    if (subId === '' && user.role == "client") {
+  async updateUser(user : IUser, subId: string) : Promise<string | null> {
+    /* if (subId === '' && user.role == "client") {
       addDoc(collection(db, 'users'), {
         email: user.email,
         permissions: ["read"],
@@ -22,7 +22,8 @@ export default class UserService {
       .catch((error: Error) => {
         return error.message
       })
-    } else if(subId != '' && user.role == "helper") {
+    } else */ 
+    if(subId != '' && user.role == "helper") {
       await setDoc(doc(db, 'users', subId), {
         email: user.email,
         permissions: ["read","write"],
@@ -84,7 +85,7 @@ export default class UserService {
     }
   }
 
-  async updateUserData(user: IUser) : Promise<string | null> {
+  async addNewUser(user: IUser) : Promise<string | null> {
 
     const getUserByEmail = query(collection(db, 'users'), where("email", "==", user.email))
     const querySnapshot = await getDocs(getUserByEmail)

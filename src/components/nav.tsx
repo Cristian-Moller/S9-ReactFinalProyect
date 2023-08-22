@@ -16,21 +16,20 @@ export function Nav({ children }: Props){
   
 
   const changeMenuHidden = () => {
-    menuNavbar.current?.classList.toggle("overflow-hidden")
-    menuNavbar.current?.classList.toggle("h-0")
-    console.log('click', menuNavbar.current?.classList)
+    menuNavbar?.current?.classList.toggle("overflow-hidden")
+    menuNavbar?.current?.classList.toggle("h-0")
+    console.log('click', menuNavbar?.current?.classList)
   }
 
   return (
     <nav className="mx-auto dark:bg-gray-700 dark:text-white sticky inset-0 z-10 block h-max w-full max-w-full rounded-none border border-white/80 bg-white bg-opacity-80 py-2 px-4 text-white shadow-md backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4" >
       <div>
         <div className="container mx-auto justify-between flex items-center text-gray-900 dark:text-white" >
-          <a
-            href="#"
-            className="mr-4 block cursor-pointer py-1.5 font-sans text-base font-medium leading-relaxed text-inherit antialiased"
-          >
-            CAM
-          </a>
+          <img src={('/src/assets/logo.png')} className="h-14 mr-3" alt="FlowBite Logo" />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            <a href="#">
+              <img src="https://fontmeme.com/permalink/230822/b9a55d4a57cbd16fa42d57324bb65c88.png" alt="fuente-stage-oriental" className="border-0" /></a>
+          </span>
           <ul className="ml-auto mr-8 hidden items-center gap-6 lg:flex" >
             <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
               <Link className="flex items-center" to="/" >Home</Link>

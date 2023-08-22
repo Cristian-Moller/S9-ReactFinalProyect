@@ -7,9 +7,10 @@ export interface IUser {
 }
 
 export interface IProduct {
+  id: string,
   title: string,
   detail: string,
   price: number,
   quantity: number,
-  img: string[],
+  img: string | ArrayBuffer | null,
 }

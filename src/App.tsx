@@ -11,6 +11,7 @@ import { Client } from './components/client';
 import { AddProducts } from './pages/addProducts';
 import { ThemeProvider } from './context/themeContext';
 import CartService from './services/cart.service';
+import Footer from './components/footer';
 
 
 function App(): JSX.Element {
@@ -63,6 +64,7 @@ function App(): JSX.Element {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>
+        <Footer />
       </AuthProvider>
     </ThemeProvider>
   )
