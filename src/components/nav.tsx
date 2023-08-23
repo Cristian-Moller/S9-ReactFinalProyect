@@ -37,9 +37,9 @@ export function Nav({ children }: Props){
 
             { authContext?.user &&
               <>
-                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                  <Link className="flex items-center" to="/client" >Client</Link>
-                </li>
+                {/* <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/userProfile" >userProfile</Link>
+                </li> */}
                 <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
                   <Link className="flex items-center" to="/carrito" >Carrito</Link>
                 </li>
@@ -82,7 +82,12 @@ export function Nav({ children }: Props){
                 </>
                 :
                 <>
-                  {authContext?.user.email}
+                  <p className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                    <Link className="flex items-center" to="/userProfile" >
+                      {authContext?.user.email}
+                    </Link>
+                  </p>
+                  
                   <Logout />
                 </>
               }
@@ -137,9 +142,9 @@ export function Nav({ children }: Props){
             <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
               <Link className="flex items-center" to="/" >Home</Link>
             </li>
-            <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
-              <Link className="flex items-center" to="/client" >Client</Link>
-            </li>
+           {/*  <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
+              <Link className="flex items-center" to="/userProfile" >userProfile</Link>
+            </li> */}
             <li className="block p-1 font-sans text-sm font-normal leading-normal text-inherit antialiased">
               <Link className="flex items-center" to="/carrito" >Carrito</Link>
             </li>
@@ -168,8 +173,10 @@ export function Nav({ children }: Props){
                 </>
                 :
                 <>
-                  <p className="text-base">
-                    {authContext?.user.email}
+                  <p className="text-base block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                    <Link className="flex items-center" to="/userProfile" >
+                      {authContext?.user.email}
+                    </Link>
                   </p>
                   <Logout />
                 </>

@@ -1,4 +1,4 @@
-import { Routes, Route, redirect } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { Home } from './pages/home'
 import { Register } from './components/register'
 import { Login } from './components/login'
@@ -7,7 +7,7 @@ import { ProtectedRoute } from './components/protectedRoute';
 import { AdminView } from './pages/adminView';
 import { Nav } from './components/nav';
 import Cart  from './components/carrito';
-import { Client } from './components/client';
+import { UserProfile } from './pages/userProfile';
 import { AddProducts } from './pages/addProducts';
 import { ThemeProvider } from './context/themeContext';
 import CartService from './services/cart.service';
@@ -41,14 +41,14 @@ function App(): JSX.Element {
               />
             }
           >
-            <Route path='/client' element={<Client /> } />
+            <Route path='/userProfile' element={<UserProfile /> } />
             <Route path='/carrito' element={<Cart cartService={cartService} /> } />
           </Route>
           
           <Route path='/add' element={
             <ProtectedRoute 
               isAllowed={isAllowed('write', 'admin')} 
-              redirectTo='/client'
+              redirectTo='/userProfile'
             >
               <AdminView />
             </ProtectedRoute>
@@ -56,7 +56,7 @@ function App(): JSX.Element {
           <Route path='/addproducts' element={
             <ProtectedRoute 
               isAllowed={isAllowed('write')}
-              redirectTo='/client'
+              redirectTo='/userProfile'
             >
               <AddProducts />
             </ProtectedRoute>

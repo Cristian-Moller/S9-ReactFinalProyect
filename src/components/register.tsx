@@ -13,7 +13,18 @@ export function Register(): JSX.Element {
     email: '',
     password: '',
     permissions: ['read'],
-    role: 'client'
+    role: 'client',
+    img: '',
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    streetAddress: '',
+    streetNumber: '',
+    aptUnit: '',
+    city: '',
+    province: '',
+    zip: '',
   })
 
   const authContext = useAuth()

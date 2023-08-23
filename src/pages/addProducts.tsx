@@ -26,7 +26,7 @@ export function AddProducts() {
 
   const fileHandle = (archives: string) => {
 
-     Array.from(archives).forEach((archive: string): void => {
+    Array.from(archives).forEach((archive: string): void => {
       const reader = new FileReader()
       reader.readAsDataURL(archive)
       reader.onload = function(this: FileReader) {
@@ -35,7 +35,7 @@ export function AddProducts() {
         urlImageDesc = base64
         setProduct({...product, img: urlImageDesc})
       }
-    }) 
+    })
   }
 
   const saveProduct = async (e: React.SyntheticEvent<HTMLFormElement>): Promise<void> => {
@@ -185,11 +185,11 @@ export function AddProducts() {
                   :
                   <input 
                     className="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  id="large_size"
-                  type="file" 
-                  name="img"
-                  onChange={(e) => fileHandle(e.target.files)}
-                  required={!product.img}
+                    id="large_size"
+                    type="file" 
+                    name="img"
+                    onChange={(e) => fileHandle(e.target.files)}
+                    required={!product.img}
                   />
                 }
               </div>

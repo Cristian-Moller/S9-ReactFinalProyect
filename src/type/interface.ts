@@ -3,7 +3,18 @@ export interface IUser {
   email: string,
   password: string,
   permissions: string[],
-  role: string 
+  role: string,
+  img?: string | ArrayBuffer | null,
+  firstName?: string,
+  lastName?: string,
+  dni?: string,
+  phone?: string,
+  streetAddress?: string,
+  streetNumber?: string,
+  aptUnit?: string,
+  city?: string,
+  province?: string,
+  zip?: string,
 }
 
 export interface IProduct {

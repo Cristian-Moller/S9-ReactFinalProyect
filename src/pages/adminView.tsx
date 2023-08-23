@@ -11,7 +11,18 @@ export function AdminView(): JSX.Element {
     email: '',
     password: '',
     permissions: [''],
-    role: ''
+    role: '',
+    img: '',
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    streetAddress: '',
+    streetNumber: '',
+    aptUnit: '',
+    city: '',
+    province: '',
+    zip: '',
   }
   const [ user, setUser ] = useState<IUser>(initialValue)
   
@@ -36,9 +47,6 @@ export function AdminView(): JSX.Element {
     e.preventDefault()
     setError('')
 
-    
-
-
     if(subId === '') {
       const error = await userService.addNewUser(user);
 
@@ -52,11 +60,6 @@ export function AdminView(): JSX.Element {
         setError(error)
       }
     }
-
-
-
-
-
 
     setUser({...initialValue})
     setSelected(initialValue.role)

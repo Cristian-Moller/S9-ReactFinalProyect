@@ -21,7 +21,6 @@ export function Home() {
     <div className="flex flex-row flex-wrap gap-4 bg-[url('src/assets/image3.jpg')] bg-cover bg-fixed p-2">
       { listProducts?.map((product, index) => (
         <div className="w-80 h-96 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto" key={index}>
-          
           <img className="p-2 rounded-t-lg h-48 w-44 m-auto" src={product.img} alt="product image" />
           <div className="px-5 pb-5">
             <a href="#">
