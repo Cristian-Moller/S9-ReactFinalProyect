@@ -2,6 +2,8 @@
 import { IProduct } from "../type/interface";
 import React, { useEffect, useState } from "react";
 import ProductDataService from "../services/product.service";
+import { ReactComponent as DeleteIcon } from "../assets/svgs/Delete.svg";
+import { ReactComponent as EditIcon } from "../assets/svgs/Edit.svg";
 
 export function AddProducts() {
   
@@ -66,8 +68,8 @@ export function AddProducts() {
     await productDataService.deleteProductById(id)
     void getProductList()
   }
+
     /* 
-  
     delete(id: string) {
       return db.doc(id).delete();
     } */
@@ -178,8 +180,7 @@ export function AddProducts() {
                       type="button" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 h-14"
                       onClick={(e) => editImg(e)}
                     >
-                      {/* delete */}
-                      <svg className="w-6 h-6 align-middle fill-current overflow-hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" enable-background="new 0 0 256 256"><path d="M229.2,60.6h-23.6l-15.8,163c0,12.4-10.1,22.5-22.5,22.5H88.7c-12.4,0-22.5-10.1-22.5-22.5l-15.8-163H26.8c-3.1,0-5.6-2.5-5.6-5.6s2.5-5.6,5.6-5.6h22.5h11.2h16.9V32.5C77.4,20.1,87.5,10,99.9,10h56.2c12.4,0,22.5,10.1,22.5,22.5v16.9h16.9h11.2h22.5c3.1,0,5.6,2.5,5.6,5.6S232.3,60.6,229.2,60.6z M167.3,32.4c0-6.2-5-11.2-11.2-11.2H99.9c-6.2,0-11.2,5-11.2,11.2v16.9h78.7V32.4z M61.6,60.6l15.8,163c0,6.2,5,11.2,11.2,11.2h78.7c6.2,0,11.2-5,11.2-11.2l15.8-163H61.6z M156.1,212.3c-3.1,0-5.6-2.5-5.6-5.6l5.6-118c0-3.1,2.5-5.6,5.6-5.6c3.1,0,5.6,2.5,5.6,5.6l-5.6,118C161.7,209.8,159.2,212.3,156.1,212.3z M128,212.3c-3.1,0-5.6-2.5-5.6-5.6v-118c0-3.1,2.5-5.6,5.6-5.6s5.6,2.5,5.6,5.6v118C133.6,209.8,131.1,212.3,128,212.3z M99.9,212.3c-3.1,0-5.6-2.5-5.6-5.6l-5.6-118c0-3.1,2.5-5.6,5.6-5.6c3.1,0,5.6,2.5,5.6,5.6l5.6,118C105.5,209.8,103,212.3,99.9,212.3z"/></svg>
+                      <DeleteIcon className="w-6 h-6 align-middle fill-current overflow-hidden" />
                     </button>
                   </div>
                   :
@@ -265,15 +266,13 @@ export function AddProducts() {
                     type="button" className="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-3.5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
                     onClick={() => setProductId(product.id) }
                   >
-                    {/* edit */}
-                    <svg className="w-6 h-6 align-middle fill-current overflow-hidden" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M834.3 705.7c0 82.2-66.8 149-149 149H325.9c-82.2 0-149-66.8-149-149V346.4c0-82.2 66.8-149 149-149h129.8v-42.7H325.9c-105.7 0-191.7 86-191.7 191.7v359.3c0 105.7 86 191.7 191.7 191.7h359.3c105.7 0 191.7-86 191.7-191.7V575.9h-42.7v129.8z"  /><path d="M889.7 163.4c-22.9-22.9-53-34.4-83.1-34.4s-60.1 11.5-83.1 34.4L312 574.9c-16.9 16.9-27.9 38.8-31.2 62.5l-19 132.8c-1.6 11.4 7.3 21.3 18.4 21.3 0.9 0 1.8-0.1 2.7-0.2l132.8-19c23.7-3.4 45.6-14.3 62.5-31.2l411.5-411.5c45.9-45.9 45.9-120.3 0-166.2zM362 585.3L710.3 237 816 342.8 467.8 691.1 362 585.3zM409.7 730l-101.1 14.4L323 643.3c1.4-9.5 4.8-18.7 9.9-26.7L436.3 720c-8 5.2-17.1 8.7-26.6 10z m449.8-430.7l-13.3 13.3-105.7-105.8 13.3-13.3c14.1-14.1 32.9-21.9 52.9-21.9s38.8 7.8 52.9 21.9c29.1 29.2 29.1 76.7-0.1 105.8z"  /></svg>
+                    <EditIcon className="w-6 h-6 align-middle fill-current overflow-hidden" />
                   </button>
                   <button
                     type="button" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
                     onClick={() => DeleteProductId(product.id)}
                   >
-                    {/* delete */}
-                    <svg className="w-6 h-6 align-middle fill-current overflow-hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" enable-background="new 0 0 256 256"><path d="M229.2,60.6h-23.6l-15.8,163c0,12.4-10.1,22.5-22.5,22.5H88.7c-12.4,0-22.5-10.1-22.5-22.5l-15.8-163H26.8c-3.1,0-5.6-2.5-5.6-5.6s2.5-5.6,5.6-5.6h22.5h11.2h16.9V32.5C77.4,20.1,87.5,10,99.9,10h56.2c12.4,0,22.5,10.1,22.5,22.5v16.9h16.9h11.2h22.5c3.1,0,5.6,2.5,5.6,5.6S232.3,60.6,229.2,60.6z M167.3,32.4c0-6.2-5-11.2-11.2-11.2H99.9c-6.2,0-11.2,5-11.2,11.2v16.9h78.7V32.4z M61.6,60.6l15.8,163c0,6.2,5,11.2,11.2,11.2h78.7c6.2,0,11.2-5,11.2-11.2l15.8-163H61.6z M156.1,212.3c-3.1,0-5.6-2.5-5.6-5.6l5.6-118c0-3.1,2.5-5.6,5.6-5.6c3.1,0,5.6,2.5,5.6,5.6l-5.6,118C161.7,209.8,159.2,212.3,156.1,212.3z M128,212.3c-3.1,0-5.6-2.5-5.6-5.6v-118c0-3.1,2.5-5.6,5.6-5.6s5.6,2.5,5.6,5.6v118C133.6,209.8,131.1,212.3,128,212.3z M99.9,212.3c-3.1,0-5.6-2.5-5.6-5.6l-5.6-118c0-3.1,2.5-5.6,5.6-5.6c3.1,0,5.6,2.5,5.6,5.6l5.6,118C105.5,209.8,103,212.3,99.9,212.3z"/></svg>
+                    <DeleteIcon className="w-6 h-6 align-middle fill-current overflow-hidden" />
                   </button>
                 </td>
               </tr>

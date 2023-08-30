@@ -10,13 +10,14 @@ const Cart = (props: IServiceProps) => {
 
   const [cartProducts, setCartProducts] = useState<IProductSell[]>()
   const [open, setOpen] = useState<boolean>(false)
+  const [openDeleteItem, setOpenDeleteItem] = useState<boolean>(false)
   const [subTotal, setSubTotal] = useState<number>(0)
   const [totalItems, setTotalItems] = useState<number>(0)
   const [productToUpdate, setProductToUpdate] = useState<IProductSell>()
   const [productToDelete, setProductToDelete] = useState<IProductSell>()
   
   const handleDelete = () => {
-    console.log(productToUpdate)
+    console.log('pup',productToUpdate?.id)
     if(productToUpdate){
       const cart = props.cartService.updateItem(productToUpdate.id, -1);
       setCartProducts([...cart])
@@ -25,20 +26,22 @@ const Cart = (props: IServiceProps) => {
   }
 
   function handleDeleteItem() {
+    console.log('pdelete',productToDelete)
     if(productToDelete){
       props.cartService.removeItem(productToDelete.id)
       setCartProducts([...props.cartService.getCart()])
     }
-    setOpen(false)
+    setOpenDeleteItem(false)
   }
 
   const handleCancel = () => {
     setOpen(false)
+    setOpenDeleteItem(false)
   }
   
   const changeQty = (id: string, qty: number) => {
     const product = cartProducts?.find(prod => prod.id === id)
-
+    console.log('product', product)
     setProductToUpdate(product);
 
     if(product !== undefined && (qty*-1) === 1 && product.quantitySell === 1){
@@ -55,7 +58,7 @@ const Cart = (props: IServiceProps) => {
     setProductToDelete(product);
 
     if(product !== undefined){
-      setOpen(true)
+      setOpenDeleteItem(true)
     }
   }
 
@@ -98,7 +101,7 @@ const Cart = (props: IServiceProps) => {
         :
         <>
           <Modal onOk={handleDelete} onCancel={handleCancel} isOpen={open} title="Delete product" text="Are you sure you wont to remove the product from the cart?" buttonCancel="Cancel" buttonOk="Delete" />
-          <Modal onOk={handleDeleteItem} onCancel={handleCancel} isOpen={open} title="Delete product" text="Are you sure you wont to remove the product from the cart?" buttonCancel="Cancel" buttonOk="Delete" />
+          <Modal onOk={handleDeleteItem} onCancel={handleCancel} isOpen={openDeleteItem} title="Delete product" text="Are you sure you wont to remove the product from the cart?" buttonCancel="Cancel" buttonOk="Delete" />
           <section className="h-screen bg-gray-100 pt-20 container bg-[url('src/assets/image4.jpg')] bg-cover bg-no-repeat m-auto sm:h-auto sm:pb-6">
             <h1 className="mb-10 text-center text-2xl font-bold text-white">Cart Items</h1>
             <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 h-fit">

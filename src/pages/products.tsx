@@ -11,7 +11,6 @@ export function Products(props: IServiceProps) {
   const productDataService =  new ProductDataService();
   const [ listProducts, setListProducts ] = useState<Array<IProduct>>()
   
-  
   const addProduct = (id: string) => {
     productDataService.getProduct(id)
       .then((productID) => {
@@ -22,7 +21,6 @@ export function Products(props: IServiceProps) {
         props.cartService.addItem(productID, id)
       })
       .catch((error: Error) => console.log(error))
-   
   }
 
   const getProductList = async () => {

@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { IUser } from "../type/interface";
 import { db } from "../firebase";
 
@@ -92,8 +92,7 @@ export default class UserService {
     
     const getUserByEmail = query(collection(db, 'users'), where("email", "==", user.email))
     const querySnapshot = await getDocs(getUserByEmail)
-    
-    
+     
     if(querySnapshot.empty) {
       if(user.role === 'client') {
         addDoc(collection(db, 'users'), {
@@ -164,6 +163,5 @@ export default class UserService {
     }
     return null; 
   }
-
 
 }

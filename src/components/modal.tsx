@@ -13,8 +13,8 @@ export default function Modal(props: IModalProps) {
   }, [props])
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+    <Transition.Root show={open} as={Fragment} >
+      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={props.onCancel}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

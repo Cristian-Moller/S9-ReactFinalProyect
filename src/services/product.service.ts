@@ -10,7 +10,7 @@ export default class ProductDataService {
     try {
       const querySnapshot = await getDocs(collection(db, 'products'))
       querySnapshot.forEach((doc) => {
-        products.push({ ...doc.data(), id: doc.id });
+        products.push({ ...doc.data() as IProduct, id: doc.id });
       })
     } catch (error) {
       console.error(error)

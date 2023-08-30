@@ -17,7 +17,7 @@ export default class CartService {
 
     const product = this.cart[productIndex]
 
-    console.log('first', product.quantity >= product.quantitySell)
+    console.log('first', product.quantity > product.quantitySell)
     
     if(product.quantity > product.quantitySell || qty === -1){
       product.quantitySell += qty
