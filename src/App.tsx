@@ -1,18 +1,17 @@
 import { Routes, Route } from 'react-router-dom'
-import { Home } from './pages/home'
+import { Products } from './pages/products'
 import { Register } from './components/register'
 import { Login } from './components/login'
 import { AuthProvider, useAuth } from "./context/authContext";
 import { ProtectedRoute } from './components/protectedRoute';
 import { AdminView } from './pages/adminView';
 import { Nav } from './components/nav';
-import Cart  from './components/carrito';
+import Cart  from './pages/cart';
 import { UserProfile } from './pages/userProfile';
 import { AddProducts } from './pages/addProducts';
 import { ThemeProvider } from './context/themeContext';
 import CartService from './services/cart.service';
 import Footer from './components/footer';
-
 
 function App(): JSX.Element {
   const cartService = new CartService()
@@ -31,9 +30,9 @@ function App(): JSX.Element {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Nav children={undefined} />
+        <Nav />
         <Routes>
-          <Route path='/' element={<Home /> } />
+          <Route path='/' element={<Products cartService={cartService} /> } />
           <Route element={
               <ProtectedRoute 
                 isAllowed={isAllowed('read')}
@@ -42,7 +41,7 @@ function App(): JSX.Element {
             }
           >
             <Route path='/userProfile' element={<UserProfile /> } />
-            <Route path='/carrito' element={<Cart cartService={cartService} /> } />
+            <Route path='/cart' element={<Cart cartService={cartService} /> } />
           </Route>
           
           <Route path='/add' element={

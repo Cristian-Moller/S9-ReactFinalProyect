@@ -1,3 +1,5 @@
+import CartService from "../services/cart.service";
+
 export interface IUser {
   id: string,
   email: string,
@@ -24,4 +26,32 @@ export interface IProduct {
   price: number,
   quantity: number,
   img: string | ArrayBuffer | null,
+}
+
+export interface IProductSell {
+  id: string,
+  title: string,
+  detail: string,
+  price: number,
+  quantity: number,
+  quantitySell: number,
+  img: string | ArrayBuffer | null,
+}
+
+export interface IServiceProps{
+  cartService: CartService,
+}
+
+export interface IModalProps {
+  isOpen: boolean,
+  title: string,
+  text: string,
+  buttonOk: string,
+  buttonCancel: string,
+  onOk: () => void,
+  onCancel: () => void,
+}
+
+export interface ICartEventDetail {
+  totalQuantity: number
 }
