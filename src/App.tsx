@@ -12,6 +12,7 @@ import { AddProducts } from './pages/addProducts';
 import { ThemeProvider } from './context/themeContext';
 import CartService from './services/cart.service';
 import Footer from './components/footer';
+import Orders from './pages/orders';
 
 function App(): JSX.Element {
   const cartService = new CartService()
@@ -42,6 +43,7 @@ function App(): JSX.Element {
           >
             <Route path='/userProfile' element={<UserProfile /> } />
             <Route path='/cart' element={<Cart cartService={cartService} /> } />
+            <Route path='/orders/:params' element={<Orders cartService={cartService} /> } />
           </Route>
           
           <Route path='/add' element={

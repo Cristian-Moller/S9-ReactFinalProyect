@@ -1,10 +1,9 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, where 
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, or, query, setDoc, where 
 } from "firebase/firestore";
 import { db } from "../firebase"
 import { IProduct } from "../type/interface"
   
 export default class ProductDataService {
-
   async getProductList(): Promise<Array<IProduct>> {
     const products = new Array<IProduct>()
     try {

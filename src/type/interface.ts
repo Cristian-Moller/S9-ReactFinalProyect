@@ -55,3 +55,40 @@ export interface IModalProps {
 export interface ICartEventDetail {
   totalQuantity: number
 }
+
+export interface IOrder {
+  idUser: string,
+  userEmail: string,
+  firstName: string,
+  lastName: string,
+  phone: string,
+  streetAddress: string,
+  streetNumber: string,
+  aptUnit: string,
+  city: string,
+  province: string,
+  zip: string,
+  delivered: boolean,
+  products: IOrderLine[],
+}
+
+export interface IOrderLine {
+  idProduct: string,
+  quantitySell: number,
+}
+
+export interface IOrderComplete {
+  idUser: string,
+  userEmail: string,
+  firstName: string,
+  lastName: string,
+  phone: string,
+  streetAddress: string,
+  streetNumber: string,
+  aptUnit: string,
+  city: string,
+  province: string,
+  zip: string,
+  delivered: boolean,
+  products: IProductSell[],
+}

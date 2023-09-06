@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { IProductSell, IServiceProps } from "../type/interface";
 import Modal from "../components/modal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Helper from "../helpers/image.helper";
 import {ReactComponent as MarketIcon} from "../assets/svgs/Market.svg";
 import {ReactComponent as DeleteIcon} from "../assets/svgs/Delete.svg";
 const helper = new Helper()
+
 const Cart = (props: IServiceProps) => {
 
   const [cartProducts, setCartProducts] = useState<IProductSell[]>()
@@ -15,6 +16,7 @@ const Cart = (props: IServiceProps) => {
   const [totalItems, setTotalItems] = useState<number>(0)
   const [productToUpdate, setProductToUpdate] = useState<IProductSell>()
   const [productToDelete, setProductToDelete] = useState<IProductSell>()
+  const navigate = useNavigate()
   
   const handleDelete = () => {
     console.log('pup',productToUpdate?.id)
@@ -146,7 +148,7 @@ const Cart = (props: IServiceProps) => {
                 ))}
               </div>
 
-                {/* Sub total */}
+                {/* total */}
               <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3 dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                 <div className="mb-2 flex justify-between">
                   <p className="text-gray-700 dark:text-white text-xl">Total Items</p>
@@ -172,7 +174,10 @@ const Cart = (props: IServiceProps) => {
                     <p className="text-gray-700 dark:text-white text-base">including VAT</p>
                   </div>
                 </div>
-                <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+                <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
+                  onClick={() => navigate("/orders/true") }
+                >Check out
+                </button>
               </div>
             </div>
           </section>

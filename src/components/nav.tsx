@@ -50,7 +50,7 @@ export function Nav(){
             <a href="#">
               <img src="https://fontmeme.com/permalink/230822/b9a55d4a57cbd16fa42d57324bb65c88.png" alt="fuente-stage-oriental" className="border-0" /></a>
           </span>
-          <ul className="ml-auto mr-8 hidden items-center gap-6 lg:flex" >
+          <ul className="ml-auto mr-8 hidden items-center gap-1 xl:gap-4 lg:flex" >
             <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
               <Link className="flex items-center" to="/" >Products</Link>
             </li>
@@ -65,14 +65,22 @@ export function Nav(){
                     </span>
                   </Link>
                 </li>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/orders/false" >Orders </Link>
+                </li>
               </>
             }
 
             { (authContext?.user && 
               authContext?.user?.permissions.includes('write')) && 
-              <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                <Link className="flex items-center" to="/addproducts" >Add Products</Link>
-              </li>
+              <>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/deliverys" >Deliverys </Link>
+                </li>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/addproducts" >Add Products</Link>
+                </li>
+              </>
             }
 
             { (authContext?.user && 
@@ -160,21 +168,30 @@ export function Nav(){
               <Link className="flex items-center" to="/" >Products</Link>
             </li>
             { authContext?.user &&
-              
-              <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                <Link className="flex items-center" to="/cart" >
-                  <CartIcon className="w-6 h-6 align-middle fill-current overflow-hidden mr-2" />
-                  <span className="text-fuchsia-600 font-bold text-lg">
-                    {totalQuantity}
-                  </span>
-                </Link>
-              </li>
+              <>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/cart" >
+                    <CartIcon className="w-6 h-6 align-middle fill-current overflow-hidden mr-2" />
+                    <span className="text-fuchsia-600 font-bold text-lg">
+                      {totalQuantity}
+                    </span>
+                  </Link>
+                </li>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/orders/false" >Orders </Link>
+                </li>
+              </>
             }
             { (authContext?.user && 
               authContext?.user?.permissions.includes('write')) && 
-              <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                <Link className="flex items-center" to="/addproducts" >Add Products</Link>
-              </li>
+              <>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/deliverys" >Deliverys </Link>
+                </li>
+                <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
+                  <Link className="flex items-center" to="/addproducts" >Add Products</Link>
+                </li>
+              </>
             }
             { (authContext?.user && 
               authContext?.user?.permissions.includes('write')

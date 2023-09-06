@@ -6,6 +6,7 @@ import { ReactComponent as DeleteIcon } from "../assets/svgs/Delete.svg";
 import { ReactComponent as EditIcon } from "../assets/svgs/Edit.svg";
 
 export function AddProducts() {
+  const productDataService =  new ProductDataService()
   
   let urlImageDesc: string | ArrayBuffer | null
   
@@ -61,25 +62,22 @@ export function AddProducts() {
     void getProductList()
     setProduct({...initialValue})
     setProductId('')
-    e.target.imgId.value = ''
   }
   
-  const DeleteProductId = async (id: string) => {
+  const DeleteProductId = async (id: string): Promise<void> => {
     await productDataService.deleteProductById(id)
     void getProductList()
   }
 
-    /* 
-    delete(id: string) {
-      return db.doc(id).delete();
-    } */
+  /* 
+  delete(id: string) {
+    return db.doc(id).delete();
+  } */
 
   const getProductList = async () => {
     const products = await productDataService.getProductList();
     setListProducts(products);
   }
-  
-  const productDataService =  new ProductDataService();
 
   const getProduct = async (id: string) => {
     const productID = await productDataService.getProduct(id)
@@ -90,7 +88,7 @@ export function AddProducts() {
     setProduct(productID)
   }
 
-  const editImg = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const editImg = (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     setProduct({...product, img: ''})
   }

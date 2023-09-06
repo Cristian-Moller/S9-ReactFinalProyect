@@ -66,7 +66,7 @@ export default class UserService {
       if(querySnapshot.empty) {
         return null
       }
-      return querySnapshot.docs[0].data() as IUser;
+      return { ...querySnapshot.docs[0].data() as IUser, id: querySnapshot.docs[0].id };
 
     } catch (error) {
       console.error(error)
@@ -112,7 +112,9 @@ export default class UserService {
           zip: user.zip,
         }).catch((error: Error) => {
           return error.message
-        })} else {
+        })
+      } 
+      else {
         addDoc(collection(db, 'users'), {
         email: user.email,
         permissions: ["read","write"],
@@ -130,7 +132,8 @@ export default class UserService {
         zip: user.zip
       }).catch((error: Error) => {
         return error.message
-      })}
+      })
+    }
       
      return null;
     }
