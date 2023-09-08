@@ -57,6 +57,7 @@ export interface ICartEventDetail {
 }
 
 export interface IOrder {
+  id: string,
   idUser: string,
   userEmail: string,
   firstName: string,
@@ -78,6 +79,7 @@ export interface IOrderLine {
 }
 
 export interface IOrderComplete {
+  id: string,
   idUser: string,
   userEmail: string,
   firstName: string,

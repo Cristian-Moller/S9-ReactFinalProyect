@@ -8,11 +8,12 @@ import { AdminView } from './pages/adminView';
 import { Nav } from './components/nav';
 import Cart  from './pages/cart';
 import { UserProfile } from './pages/userProfile';
-import { AddProducts } from './pages/addProducts';
+import AddProducts from './pages/addProducts';
 import { ThemeProvider } from './context/themeContext';
 import CartService from './services/cart.service';
 import Footer from './components/footer';
 import Orders from './pages/orders';
+import Deliverys from './pages/deliverys';
 
 function App(): JSX.Element {
   const cartService = new CartService()
@@ -34,6 +35,7 @@ function App(): JSX.Element {
         <Nav />
         <Routes>
           <Route path='/' element={<Products cartService={cartService} /> } />
+
           <Route element={
               <ProtectedRoute 
                 isAllowed={isAllowed('read')}
@@ -45,21 +47,23 @@ function App(): JSX.Element {
             <Route path='/cart' element={<Cart cartService={cartService} /> } />
             <Route path='/orders/:params' element={<Orders cartService={cartService} /> } />
           </Route>
-          
+
+          <Route element={
+            <ProtectedRoute 
+            isAllowed={isAllowed('write')}
+            redirectTo='/userProfile'
+            />
+          } >
+            <Route path='/addProducts' element={<AddProducts /> } />
+            <Route path='/deliverys' element={<Deliverys cartService={cartService} /> } />
+          </Route>
+
           <Route path='/add' element={
             <ProtectedRoute 
               isAllowed={isAllowed('write', 'admin')} 
               redirectTo='/userProfile'
             >
               <AdminView />
-            </ProtectedRoute>
-          }/>
-          <Route path='/addproducts' element={
-            <ProtectedRoute 
-              isAllowed={isAllowed('write')}
-              redirectTo='/userProfile'
-            >
-              <AddProducts />
             </ProtectedRoute>
           }/>
           <Route path='/login' element={<Login />} />

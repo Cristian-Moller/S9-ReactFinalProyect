@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
 import { Params, useParams } from "react-router-dom"
-import { IOrder, IOrderComplete, IProduct, IProductSell, IServiceProps } from "../type/interface"
+import { IOrder, IOrderComplete, IProductSell, IServiceProps } from "../type/interface"
 import { useAuth } from "../context/authContext"
 import UserService from "../services/users.service"
 import Helper from "../helpers/image.helper"
 import DeliveryService from "../services/deliverys.service"
-import ProductDataService from "../services/product.service"
 const helper = new Helper()
 
 
@@ -15,11 +14,11 @@ export default function Orders(props: IServiceProps) {
   
   const userService = new UserService();
   const deliveryService = new DeliveryService(props.cartService);
-  const productDataService =  new ProductDataService();
 
   const authContext = useAuth()
 
   const valueUserDelivery = {
+    id: '',
     idUser: authContext?.user?.id ?? '',
     userEmail:  authContext?.user?.email ?? '',
     firstName: authContext?.user?.firstName ?? '',
@@ -54,7 +53,7 @@ export default function Orders(props: IServiceProps) {
 
       setVisibleForm('false');
     }
-    await getOrders(userOrder.userEmail)
+    await getMyOrders(userOrder.userEmail)
   }
 
   const cartSubTotal = () => {
@@ -75,6 +74,7 @@ export default function Orders(props: IServiceProps) {
       return
     }
     const delivery: IOrder = {
+      id: '',
       idUser: user.id,
       userEmail: user.email,
       firstName: user.firstName ?? '',
@@ -93,18 +93,17 @@ export default function Orders(props: IServiceProps) {
     setUserOrder(delivery)
   }
 
-  const getOrders = async (userEmail: string): Promise<void> => {
+  const getMyOrders = async (userEmail: string): Promise<void> => {
     const order = await deliveryService.getOrdersByEmail(userEmail)
     if(order === null) {
       console.error('order not found')
       return
     }
-    console.log('order', order)
     setOrdersList(order)
   }
 
   useEffect(() => {
-    return void getOrders(userOrder.userEmail);
+    return void getMyOrders(userOrder.userEmail);
   }, [])
 
   useEffect(() => { 
@@ -123,10 +122,12 @@ export default function Orders(props: IServiceProps) {
   }, [])
 
   return (
-    <div className="bg-[url('src/assets/image5.jpeg')] bg-cover py-10">
+    <div className="bg-[url('src/assets/image5.jpg')] bg-cover bg-fixed py-10">
       { (visibleForm === 'true') &&
         <section className="bg-[url('src/assets/image6.jpg')] bg-cover py-10">
-          <form className="w-full max-w-4xl m-auto p-4 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700" onSubmit={handleSubmit}>
+          <form 
+            className="w-full max-w-4xl m-auto p-4 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700"
+            onSubmit={handleSubmit}>
             <h3 className="text-3xl text-center font-bold mb-2" >Confirm Your Orders</h3>
 
             {/* User Profile */}

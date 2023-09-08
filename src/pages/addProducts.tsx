@@ -5,7 +5,7 @@ import ProductDataService from "../services/product.service";
 import { ReactComponent as DeleteIcon } from "../assets/svgs/Delete.svg";
 import { ReactComponent as EditIcon } from "../assets/svgs/Edit.svg";
 
-export function AddProducts() {
+export default function AddProducts() {
   const productDataService =  new ProductDataService()
   
   let urlImageDesc: string | ArrayBuffer | null

@@ -1,6 +1,6 @@
 import { IOrder, IOrderComplete, IOrderLine, IProductSell } from "../type/interface";
 import CartService from "./cart.service";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import ProductDataService from "./product.service";
 
@@ -54,6 +54,27 @@ export default class DeliveryService {
     return await this.mapToCompleteOrder(orderList);
   }
 
+  async getOrders() : Promise<Array<IOrderComplete>>{
+    const orderList = new Array<IOrder>()
+    try {
+      const getOrderByEmail = query(collection(db, 'orders'))
+
+      const querySnapshot = await getDocs(getOrderByEmail)
+      if(querySnapshot.empty) {
+        return []
+      }
+      querySnapshot.forEach((doc) => {
+        orderList.push({ ...doc.data() as IOrder, id: doc.id})
+      })
+
+    } catch (error) {
+      console.error(error)
+      return []
+    }
+
+    return await this.mapToCompleteOrder(orderList);
+  }
+
   async mapToCompleteOrder(orderList: IOrder[]): Promise<IOrderComplete[]> {
     const completeOrderList: IOrderComplete[] = [];
 
@@ -66,7 +87,7 @@ export default class DeliveryService {
 
         if(currentProduct !== null) {
           const productCell: IProductSell = {
-            id: currentProduct.id,
+            id: product.idProduct,
             detail: currentProduct.detail,
             img: currentProduct?.img,
             price: currentProduct?.price,
@@ -80,8 +101,39 @@ export default class DeliveryService {
       }
       completeOrderList.push(completeOrder);
     }
-
-    console.log(completeOrderList)
     return completeOrderList;
   }
+
+  async updateOrderById(checked : boolean, order: IOrderComplete, id:string) : Promise<string | null> {
+
+    await setDoc(doc(db, 'orders', id), {
+      idUser: order.idUser,
+      userEmail: order.userEmail,
+      firstName: order.firstName,
+      lastName: order.lastName,
+      phone: order.phone,
+      streetAddress: order.streetAddress,
+      streetNumber: order.streetNumber,
+      aptUnit: order.aptUnit,
+      city: order.city,
+      province: order.province,
+      zip: order.zip,
+      delivered: checked,
+      products: order.products.map(x => { 
+        const orderLine: IOrderLine = {
+          idProduct: x.id,
+          quantitySell: x.quantitySell
+        };
+        console.log('service line', orderLine)
+        return orderLine
+      }),
+    })
+    .catch((error: Error) => {
+      console.log('error', error)
+      return error.message
+    })
+    return null;
+  }
+
+
 }

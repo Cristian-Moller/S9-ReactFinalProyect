@@ -78,7 +78,7 @@ export function Nav(){
                   <Link className="flex items-center" to="/deliverys" >Deliverys </Link>
                 </li>
                 <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                  <Link className="flex items-center" to="/addproducts" >Add Products</Link>
+                  <Link className="flex items-center" to="/addProducts" >Add Products</Link>
                 </li>
               </>
             }
@@ -189,7 +189,7 @@ export function Nav(){
                   <Link className="flex items-center" to="/deliverys" >Deliverys </Link>
                 </li>
                 <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                  <Link className="flex items-center" to="/addproducts" >Add Products</Link>
+                  <Link className="flex items-center" to="/addProducts" >Add Products</Link>
                 </li>
               </>
             }
