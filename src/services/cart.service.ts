@@ -17,8 +17,6 @@ export default class CartService {
 
     const product = this.cart[productIndex]
 
-    console.log('first', product.quantity > product.quantitySell)
-    
     if(product.quantity > product.quantitySell || qty === -1){
       product.quantitySell += qty
       this.cart.splice(productIndex, 1)
@@ -50,7 +48,7 @@ export default class CartService {
       });
     }
 
-    this.dispatchEvent();
+    this.dispatchEvent()
   }
 
   private getQuantity(): number {
@@ -61,8 +59,13 @@ export default class CartService {
   } 
 
   private dispatchEvent() {
-    const event = new CustomEvent<ICartEventDetail>('onCartChange', {detail: {totalQuantity: this.getQuantity()}});
+    const event = new CustomEvent<ICartEventDetail>('onCartChange', {detail: {totalQuantity: this.getQuantity()}})
 
-    document.dispatchEvent(event);
+    document.dispatchEvent(event)
+  }
+
+  deleteCart(){
+    this.cart.splice(0, this.cart.length)
+    this.dispatchEvent()
   }
 }

@@ -19,7 +19,6 @@ const Cart = (props: IServiceProps) => {
   const navigate = useNavigate()
   
   const handleDelete = () => {
-    console.log('pup',productToUpdate?.id)
     if(productToUpdate){
       const cart = props.cartService.updateItem(productToUpdate.id, -1);
       setCartProducts([...cart])
@@ -28,7 +27,6 @@ const Cart = (props: IServiceProps) => {
   }
 
   function handleDeleteItem() {
-    console.log('pdelete',productToDelete)
     if(productToDelete){
       props.cartService.removeItem(productToDelete.id)
       setCartProducts([...props.cartService.getCart()])
@@ -43,7 +41,6 @@ const Cart = (props: IServiceProps) => {
   
   const changeQty = (id: string, qty: number) => {
     const product = cartProducts?.find(prod => prod.id === id)
-    console.log('product', product)
     setProductToUpdate(product);
 
     if(product !== undefined && (qty*-1) === 1 && product.quantitySell === 1){

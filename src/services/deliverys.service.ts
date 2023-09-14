@@ -124,7 +124,6 @@ export default class DeliveryService {
           idProduct: x.id,
           quantitySell: x.quantitySell
         };
-        console.log('service line', orderLine)
         return orderLine
       }),
     })
@@ -134,6 +133,5 @@ export default class DeliveryService {
     })
     return null;
   }
-
 
 }

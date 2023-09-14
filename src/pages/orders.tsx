@@ -5,6 +5,7 @@ import { useAuth } from "../context/authContext"
 import UserService from "../services/users.service"
 import Helper from "../helpers/image.helper"
 import DeliveryService from "../services/deliverys.service"
+import ProductDataService from "../services/product.service"
 const helper = new Helper()
 
 
@@ -14,6 +15,7 @@ export default function Orders(props: IServiceProps) {
   
   const userService = new UserService();
   const deliveryService = new DeliveryService(props.cartService);
+  const productDataService =  new ProductDataService();
 
   const authContext = useAuth()
 
@@ -50,10 +52,19 @@ export default function Orders(props: IServiceProps) {
     setInputActive(!inputActive)
     if(inputActive === true) {
       deliveryService.saveOrder(userOrder)
+      updateQuantityByOrder()
 
       setVisibleForm('false');
+      /* delete cart */
+      props.cartService.deleteCart()
     }
     await getMyOrders(userOrder.userEmail)
+  }
+
+  const updateQuantityByOrder = () => {
+    userOrder.products.map( async (prod) => {
+      await productDataService.updateQuantity(prod.idProduct, prod.quantitySell)
+    })
   }
 
   const cartSubTotal = () => {

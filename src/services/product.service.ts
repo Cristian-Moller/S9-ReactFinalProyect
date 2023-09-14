@@ -68,6 +68,25 @@ export default class ProductDataService {
     return null;
   }
 
+  async updateQuantity(id: string, quantitySell: number) {
+    const product: IProduct | null = await this.getProduct(id)
+    if(product === null) {
+      console.error('product not found')
+      return
+    }
+    await setDoc(doc(db, 'products', id), {
+      title: product.title,
+      detail: product.detail,
+      price: product.price,
+      quantity: (Number(product.quantity) - quantitySell),
+      img: product.img
+    })
+    .catch((error: Error) => {
+      return error.message
+    })
+    return null;
+  }
+
   deleteProductById = async (id: string) => {
     await deleteDoc(doc(db, 'products', id))
   }
