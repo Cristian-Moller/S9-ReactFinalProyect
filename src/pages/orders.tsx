@@ -120,7 +120,7 @@ export default function Orders(props: IServiceProps) {
       && product.img !== undefined ) 
       return product.img as string;
 
-    return "src/assets/imageNotFound.jpg";
+    return "/imageNotFound.jpg";
   }
 
   useEffect(() => {
@@ -143,9 +143,9 @@ export default function Orders(props: IServiceProps) {
   }, [])
 
   return (
-    <div className="bg-[url('src/assets/image5.jpg')] bg-cover bg-fixed py-10">
+    <div className="bg-[url('/image5.jpg')] bg-cover bg-fixed py-10">
       { (visibleForm === 'true') &&
-        <section className="bg-[url('src/assets/image6.jpg')] bg-cover py-10">
+        <section className="bg-[url('/image6.jpg')] bg-cover py-10">
           <form 
             className="w-full max-w-4xl m-auto p-4 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700"
             onSubmit={handleSubmit}>

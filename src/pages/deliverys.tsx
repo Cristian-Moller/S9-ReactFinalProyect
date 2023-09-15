@@ -13,7 +13,7 @@ export default function Deliverys(props: IServiceProps) {
       && product.img !== undefined ) 
       return product.img as string;
 
-    return "src/assets/imageNotFound.jpg";
+    return "/imageNotFound.jpg";
   }
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement> ,order: IOrderComplete) => {
@@ -43,7 +43,7 @@ export default function Deliverys(props: IServiceProps) {
   }, [])
 
   return (
-    <div className="bg-[url('src/assets/image7.jpg')] bg-cover bg-fixed py-10">
+    <div className="bg-[url('/image7.jpg')] bg-cover bg-fixed py-10">
       <h2 className="text-4xl font-bold dark:text-white text-white bg-gradient-to-r from-black via-purple-600 to-black rounded-full w-3/4 text-center m-auto mb-6">Order List</h2>
       { ordersList?.map((order, index) => (
         <div key={index} className="w-full max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 m-auto mb-4 dark:bg-gray-800 dark:border-gray-700">

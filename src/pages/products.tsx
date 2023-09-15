@@ -34,7 +34,7 @@ export function Products(props: IServiceProps) {
   }, [])
   
   return (
-    <div className="flex flex-row flex-wrap gap-4 bg-[url('src/assets/image3.jpg')] bg-cover bg-fixed p-2">
+    <div className="flex flex-row flex-wrap gap-4 bg-[url('/image3.jpg')] bg-cover bg-fixed p-2">
       { listProducts?.map((product, index) => (
         <div className="w-80 h-96 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-auto" key={index}>
           <img className="p-2 rounded-t-lg h-48 w-44 m-auto" src={helper.getImageOrDefault(product.img, "../assets/imageNotFound.jpg")} alt="product image" />

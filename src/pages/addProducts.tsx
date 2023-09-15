@@ -111,7 +111,7 @@ export default function AddProducts() {
       && product.img !== undefined ) 
       return product.img as string;
 
-    return "src/assets/imageNotFound.jpg";
+    return "/imageNotFound.jpg";
   }
 
   useEffect(() => {
@@ -126,7 +126,7 @@ export default function AddProducts() {
   }, [])
 
   return (
-    <div className="bg-[url('src/assets/image2.jpg')] bg-cover p-2">
+    <div className="bg-[url('/image2.jpg')] bg-cover p-2">
       <section className="mb-6 ">
         <div className="w-full bg-violet-200 rounded-lg shadow dark:border md:m-auto sm:max-w-3xl p-1 dark:bg-gray-800 dark:border-gray-700 lg:h-1/2">
           <h2 className="text-4xl font-bold dark:text-white text-center m-6">Add Product</h2>

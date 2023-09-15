@@ -79,7 +79,7 @@ export function UserProfile() {
   }, [])
 
   return (
-    <section className="bg-[url('src/assets/corkBoard.jpg')] bg-cover py-20">
+    <section className="bg-[url('/corkBoard.jpg')] bg-cover py-20">
       <form className="w-full max-w-4xl m-auto p-4 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700" onSubmit={handleSubmit}>
         {error && 
           <p className="bg-red-100 border border-red-400 text-red-700 px-1 py-1 mt-0 rounded relative">
@@ -169,7 +169,7 @@ export function UserProfile() {
               />
               :
               <div className="w-full flex justify-center">
-                <img className="w-32 h-32 rounded-full" src={helper.getImageOrDefault(user.img, "src/assets/userNotFound.png")} id="imgId" alt="" />
+                <img className="w-32 h-32 rounded-full" src={helper.getImageOrDefault(user.img, "/userNotFound.png")} id="imgId" alt="" />
                 <button
                   type="button" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 h-12"
                   onClick={editImg}

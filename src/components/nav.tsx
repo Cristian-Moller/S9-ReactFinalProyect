@@ -29,7 +29,7 @@ export function Nav(){
       && authContext.user.img !== undefined ) 
       return authContext.user.img as string;
 
-    return "src/assets/userNotFound.png";
+    return "/userNotFound.png";
   }
 
   const changeMenuHidden = () => {
@@ -45,7 +45,7 @@ export function Nav(){
     <nav className="mx-auto dark:bg-gray-700 dark:text-white sticky inset-0 z-10 block h-max w-full max-w-full rounded-none border border-white/80 bg-white bg-opacity-80 py-2 px-4 shadow-md backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4" >
       <div>
         <div className="container mx-auto justify-between flex items-center text-gray-900 dark:text-white" >
-          <img src={('/src/assets/logo.png')} className="h-14 mr-3" alt="FlowBite Logo" />
+          <img src={('/logo.png')} className="h-14 mr-3" alt="FlowBite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             <a href="#">
               <img src="https://fontmeme.com/permalink/230822/b9a55d4a57cbd16fa42d57324bb65c88.png" alt="fuente-stage-oriental" className="border-0" /></a>

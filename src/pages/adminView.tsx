@@ -148,7 +148,7 @@ export function AdminView(): JSX.Element {
   }, [])
 
   return (
-    <div className="bg-[url('src/assets/image2.jpg')] bg-cover flex flex-row flex-wrap" >
+    <div className="bg-[url('/image2.jpg')] bg-cover flex flex-row flex-wrap" >
 
       <section className="bg-transparent lg:w-2/5 w-full" >
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:h-screen lg:py-0">

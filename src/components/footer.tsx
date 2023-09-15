@@ -9,7 +9,7 @@ function Footer() {
         <div className="flex justify-between items-center flex-col sm:flex-row">
           <div className="mb-6 md:mb-0">
             <div className="flex items-center">
-              <img src={('/src/assets/logo.png')} className="h-14 mr-3" alt="FlowBite Logo" />
+              <img src={('/logo.png')} className="h-14 mr-3" alt="FlowBite Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 <a href="#">
                   <img src="https://fontmeme.com/permalink/230822/b9a55d4a57cbd16fa42d57324bb65c88.png" alt="fuente-stage-oriental" className="border-0" /></a>

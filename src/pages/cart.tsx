@@ -85,7 +85,7 @@ const Cart = (props: IServiceProps) => {
     <div className="bg-gradient-to-t from-blue-950 via-blue-500 to-blue-950" >
       {props.cartService.getCart().length === 0  ?
 
-        <section className="container bg-[url('src/assets/image4.jpg')] bg-cover bg-no-repeat h-screen
+        <section className="container bg-[url('/image4.jpg')] bg-cover bg-no-repeat h-screen
           m-auto flex flex-col items-center justify-center w-screen" >
           <p className="w-fit mb-6 text-white text-4xl md:text-6xl">Your cart is empty</p>
           
@@ -101,7 +101,7 @@ const Cart = (props: IServiceProps) => {
         <>
           <Modal onOk={handleDelete} onCancel={handleCancel} isOpen={open} title="Delete product" text="Are you sure you wont to remove the product from the cart?" buttonCancel="Cancel" buttonOk="Delete" />
           <Modal onOk={handleDeleteItem} onCancel={handleCancel} isOpen={openDeleteItem} title="Delete product" text="Are you sure you wont to remove the product from the cart?" buttonCancel="Cancel" buttonOk="Delete" />
-          <section className="h-screen bg-gray-100 pt-20 container bg-[url('src/assets/image4.jpg')] bg-cover bg-no-repeat m-auto sm:h-auto sm:pb-6">
+          <section className="h-screen bg-gray-100 pt-20 container bg-[url('/image4.jpg')] bg-cover bg-no-repeat m-auto sm:h-auto sm:pb-6">
             <h1 className="mb-10 text-center text-2xl font-bold text-white">Cart Items</h1>
             <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 h-fit">
               <div className="rounded-lg md:w-2/3 overflow-auto" style={{height: "48rem"}} >
