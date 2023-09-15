@@ -149,7 +149,7 @@ export default function Orders(props: IServiceProps) {
           <form 
             className="w-full max-w-4xl m-auto p-4 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700"
             onSubmit={handleSubmit}>
-            <h3 className="text-3xl text-center font-bold mb-2" >Confirm Your Orders</h3>
+            <h3 className="text-3xl text-center font-bold mb-2 dark:text-white" >Confirm Your Orders</h3>
 
             {/* User Profile */}
             <div className="flex flex-wrap -mx-3 ">

@@ -55,6 +55,8 @@ export default function AddProducts() {
           if(result !== null) {
             setError(result)
           }
+          getProductList()
+            .catch((error:Error) => console.log(error))
         })
         .catch((error: Error) => console.log(error))
     } else {
@@ -63,12 +65,11 @@ export default function AddProducts() {
           if(result !== null) {
             setError(result)
           }
+          getProductList()
+            .catch((error:Error) => console.log(error))
         })
         .catch((error: Error) => console.log(error))
     }
-    
-    getProductList()
-      .catch((error:Error) => console.log(error))
 
     setProduct({...initialValue})
     setProductId('')
