@@ -47,7 +47,7 @@ export default function Orders(props: IServiceProps) {
     setUserOrder({...userOrder, [name]: value})
   }
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()  
     setInputActive(!inputActive)
     if(inputActive === true) {
@@ -58,7 +58,8 @@ export default function Orders(props: IServiceProps) {
       /* delete cart */
       props.cartService.deleteCart()
     }
-    await getMyOrders(userOrder.userEmail)
+    getMyOrders(userOrder.userEmail)
+    .catch((error: Error) => console.log(error))
   }
 
   const updateQuantityByOrder = () => {
@@ -111,6 +112,15 @@ export default function Orders(props: IServiceProps) {
       return
     }
     setOrdersList(order)
+  }
+
+  const getProductImage = (product: IProductSell) : string => {
+    if(product !== null 
+      && product.img !== null 
+      && product.img !== undefined ) 
+      return product.img as string;
+
+    return "src/assets/imageNotFound.jpg";
   }
 
   useEffect(() => {
@@ -367,7 +377,7 @@ export default function Orders(props: IServiceProps) {
                 <li key={index} className="py-3 sm:py-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
-                      <img className="w-12 h-12 rounded-full" src={prod.img} alt="Neil image" />
+                      <img className="w-12 h-12 rounded-full" src={getProductImage(prod)} alt="Neil image" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-base font-medium text-gray-900 truncate dark:text-white">

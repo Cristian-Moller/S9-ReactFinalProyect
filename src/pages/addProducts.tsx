@@ -27,11 +27,15 @@ export default function AddProducts() {
     setProduct({...product, [name]: value})
   }
 
-  const fileHandle = (archives: string) => {
+  const fileHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
 
-    Array.from(archives).forEach((archive: string): void => {
+    const archives: FileList | null = event.target.files;
+    
+    if(archives === null) return;
+
+    Array.from(archives).forEach((archive: File): void => {
       const reader = new FileReader()
-      reader.readAsDataURL(archive)
+      reader.readAsDataURL(archive as Blob)
       reader.onload = function(this: FileReader) {
 
         const base64: string | ArrayBuffer | null = reader.result
@@ -41,32 +45,40 @@ export default function AddProducts() {
     })
   }
 
-  const saveProduct = async (e: React.SyntheticEvent<HTMLFormElement>): Promise<void> => {
+  const saveProduct = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
 
     if(productId === '') {
-      const addProductError = await productDataService.addProduct(product)
-  
-      if(addProductError !== null) {
-        setError(addProductError)
-      }
+      productDataService.addProduct(product)
+        .then((result: string | null) => {
+          if(result !== null) {
+            setError(result)
+          }
+        })
+        .catch((error: Error) => console.log(error))
     } else {
-      const addProductError = await productDataService.updateProductById(product, productId)
-  
-      if(addProductError !== null) {
-        setError(addProductError)
-      }
+      productDataService.updateProductById(product, productId)
+        .then((result: string | null) => {
+          if(result !== null) {
+            setError(result)
+          }
+        })
+        .catch((error: Error) => console.log(error))
     }
     
-    void getProductList()
+    getProductList()
+      .catch((error:Error) => console.log(error))
+
     setProduct({...initialValue})
     setProductId('')
   }
   
-  const DeleteProductId = async (id: string): Promise<void> => {
-    await productDataService.deleteProductById(id)
-    void getProductList()
+  const DeleteProductId = (id: string) => {
+    productDataService.deleteProductById(id)
+      .catch((error: Error) => console.log(error))
+    getProductList()
+      .catch((error: Error) => console.log(error))
   }
 
   /* 
@@ -91,6 +103,15 @@ export default function AddProducts() {
   const editImg = (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     setProduct({...product, img: ''})
+  }
+
+  const getProductImage = (product: IProduct) : string => {
+    if(product !== null 
+      && product.img !== null 
+      && product.img !== undefined ) 
+      return product.img as string;
+
+    return "src/assets/imageNotFound.jpg";
   }
 
   useEffect(() => {
@@ -173,7 +194,7 @@ export default function AddProducts() {
               <div className="flex w-full text-center">
                 { product.img !== '' ?
                   <div className="w-full flex justify-center">
-                    <img className="w-1/3 h-auto" src={product.img} id="imgId" alt="" />
+                    <img className="w-1/3 h-auto" src={getProductImage(product)} id="imgId" alt="" />
                     <button
                       type="button" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900 h-14"
                       onClick={(e) => editImg(e)}
@@ -187,7 +208,7 @@ export default function AddProducts() {
                     id="large_size"
                     type="file" 
                     name="img"
-                    onChange={(e) => fileHandle(e.target.files)}
+                    onChange={(e) => fileHandle(e)}
                     required={!product.img}
                   />
                 }
@@ -241,7 +262,7 @@ export default function AddProducts() {
             { listProducts?.map((product, index) => (
               <tr className="bg-violet-200 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-violet-50 dark:hover:bg-gray-600" key={index}>
                 <td className="w-32 p-4">
-                  <img src={product.img} alt="" />
+                  <img src={getProductImage(product)} alt="" />
                 </td>
                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white text-lg">
                   {product.title}

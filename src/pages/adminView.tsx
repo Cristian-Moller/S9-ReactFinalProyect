@@ -41,28 +41,35 @@ export function AdminView(): JSX.Element {
     setUser({...user, [name]: value})
   }
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
 
     if(subId === '') {
-      const error = await userService.addNewUser(user);
+      userService.addNewUser(user)
+        .then((error: string | null) => {
+          if(error !== null) {
+            setError(error)
+          }
+        })
+        .catch((error: Error) => console.log(error))
 
-      if(error !== null) {
-        setError(error)
-      }
     } else {
-      const error = await userService.updateUser(user, subId);
-
-      if(error !== null) {
-        setError(error)
-      }
+      userService.updateUser(user, subId)
+        .then((error: string | null) => {
+          if(error !== null) {
+            setError(error)
+          }
+        })
+        .catch((error: Error) => console.log(error))
     }
 
     setUser({...initialValue})
     setSelected(initialValue.role)
     setSubId('')
-    await getUserList()
+    
+    getUserList()
+      .catch((error: Error) => console.log(error))
   }
 
   // traigo el usuario desde firebase

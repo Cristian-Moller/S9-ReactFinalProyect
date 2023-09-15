@@ -15,19 +15,19 @@ export function Nav(){
   const { ToggleTheme } = useContext(ThemeContext)
   const [totalQuantity, setTotalQuantity] = useState<number>(0)
 
-  const menuNavbar = useRef<HTMLDivElement | null>()
+  const menuNavbar = useRef<HTMLDivElement | null>(null)
 
   const setQuantity = (event: Event) => {
     const quantity = (event as CustomEvent<ICartEventDetail>).detail.totalQuantity;
     setTotalQuantity(quantity)
   }
 
-  const getUserImage = () : string | ArrayBuffer => {
+  const getUserImage = () : string => {
     if(authContext !== null 
       && authContext.user !== null 
       && authContext.user.img !== null 
       && authContext.user.img !== undefined ) 
-      return authContext.user.img;
+      return authContext.user.img as string;
 
     return "src/assets/userNotFound.png";
   }
@@ -233,7 +233,7 @@ export function Nav(){
                       <p className="text-lg block p-1 font-sans font-normal leading-normal text-inherit antialiased">
                         <Link className="flex items-center" to="/userProfile" >
                           <img className="tamaño imagen perfil: w-10 h-10 rounded-full mr-1"
-                          src={authContext?.user.img} />
+                          src={getUserImage()} />
                           {authContext.user.firstName}
                         </Link>
                       </p>
