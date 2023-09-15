@@ -48,7 +48,7 @@ export function Register(): JSX.Element {
         if(addUserError !== null) {
           setError(addUserError)
         }
-        navigate('/client')
+        navigate('/')
 
       })
       .catch((error:Error) => {
