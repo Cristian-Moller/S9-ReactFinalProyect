@@ -4,7 +4,7 @@ import { IOrder, IOrderComplete, IProductSell, IServiceProps } from "../type/int
 import { useAuth } from "../context/authContext"
 import UserService from "../services/users.service"
 import Helper from "../helpers/image.helper"
-import DeliveryService from "../services/deliverys.service"
+import DeliveryService from "../services/deliveries.service"
 import ProductDataService from "../services/product.service"
 const helper = new Helper()
 

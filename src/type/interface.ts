@@ -42,6 +42,10 @@ export interface IServiceProps{
   cartService: CartService,
 }
 
+export interface ILogoutProps{
+  setTotal: (amount: number) => void,
+}
+
 export interface IModalProps {
   isOpen: boolean,
   title: string,

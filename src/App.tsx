@@ -13,7 +13,7 @@ import { ThemeProvider } from './context/themeContext';
 import CartService from './services/cart.service';
 import Footer from './components/footer';
 import Orders from './pages/orders';
-import Deliverys from './pages/deliverys';
+import Deliveries from './pages/deliveries';
 
 function App(): JSX.Element {
   const cartService = new CartService()
@@ -55,7 +55,7 @@ function App(): JSX.Element {
             />
           } >
             <Route path='/addProducts' element={<AddProducts /> } />
-            <Route path='/deliverys' element={<Deliverys cartService={cartService} /> } />
+            <Route path='/deliveries' element={<Deliveries cartService={cartService} /> } />
           </Route>
 
           <Route path='/add' element={

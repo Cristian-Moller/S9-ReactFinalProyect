@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { IOrderComplete, IProductSell, IServiceProps } from "../type/interface"
-import DeliveryService from "../services/deliverys.service"
+import DeliveryService from "../services/deliveries.service"
 
 
-export default function Deliverys(props: IServiceProps) {
+export default function Deliveries(props: IServiceProps) {
   
   const deliveryService = new DeliveryService(props.cartService);
 

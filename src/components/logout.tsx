@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { ILogoutProps } from "../type/interface";
 
-export function Logout() {
+export function Logout(props: ILogoutProps) {
 
   const authContext = useAuth();
   const navigate = useNavigate()
@@ -9,6 +10,7 @@ export function Logout() {
   const handleLogout = () => {
     authContext?.logout()
     .catch(error => console.log(error))
+    props.setTotal(0)
     navigate('/')
   }
 

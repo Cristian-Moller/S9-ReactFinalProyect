@@ -11,7 +11,7 @@ import { ReactComponent as MenuIcon } from "../assets/svgs/Menu.svg";
 
 
 export function Nav(){
-  const authContext = useAuth();
+  const authContext = useAuth()
   const { ToggleTheme } = useContext(ThemeContext)
   const [totalQuantity, setTotalQuantity] = useState<number>(0)
 
@@ -75,7 +75,7 @@ export function Nav(){
               authContext?.user?.permissions.includes('write')) && 
               <>
                 <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                  <Link className="flex items-center" to="/deliverys" >Deliverys </Link>
+                  <Link className="flex items-center" to="/deliveries" >Deliveries </Link>
                 </li>
                 <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
                   <Link className="flex items-center" to="/addProducts" >Add Products</Link>
@@ -119,7 +119,7 @@ export function Nav(){
                           {authContext?.user.email}
                         </Link>
                       </p>
-                      <Logout />
+                      <Logout setTotal={setTotalQuantity} />
                     </>
                     :
                     <>
@@ -130,7 +130,7 @@ export function Nav(){
                           {authContext.user.firstName}
                         </Link>
                       </p>
-                      <Logout />
+                      <Logout setTotal={setTotalQuantity} />
                     </>
                   }
                 </>
@@ -186,7 +186,7 @@ export function Nav(){
               authContext?.user?.permissions.includes('write')) && 
               <>
                 <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
-                  <Link className="flex items-center" to="/deliverys" >Deliverys </Link>
+                  <Link className="flex items-center" to="/deliveries" >Deliveries </Link>
                 </li>
                 <li className="block p-1 font-sans text-base font-normal leading-normal text-inherit antialiased">
                   <Link className="flex items-center" to="/addProducts" >Add Products</Link>
@@ -226,7 +226,7 @@ export function Nav(){
                           {authContext?.user.email}
                         </Link>
                       </p>
-                      <Logout />
+                      <Logout setTotal={setTotalQuantity} />
                     </>
                     :
                     <>
@@ -237,7 +237,7 @@ export function Nav(){
                           {authContext.user.firstName}
                         </Link>
                       </p>
-                      <Logout />
+                      <Logout setTotal={setTotalQuantity} />
                     </>
                   }
                 </>

@@ -20,8 +20,8 @@ export default function AddProducts() {
   }
   const [ product, setProduct ] = useState<IProduct>(initialValue)
   const [ listProducts, setListProducts ] = useState<Array<IProduct>>()
-  const [ error, setError] = useState<string | null>()
-  const [productId, setProductId] = useState<string>('')
+  const [ error, setError ] = useState<string | null>()
+  const [ productId, setProductId]  = useState<string>('')
 
   const handleChangeProduct = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setProduct({...product, [name]: value})

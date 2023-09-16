@@ -3,11 +3,14 @@ import ProductDataService from "../services/product.service";
 import { IProduct, IServiceProps } from "../type/interface";
 import { ReactComponent as StarIcon } from "../assets/svgs/Star.svg";
 import Helper from "../helpers/image.helper";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 const helper = new Helper();
 
 export function Products(props: IServiceProps) {
 
+  const authContext = useAuth()
   const productDataService =  new ProductDataService();
   const [ listProducts, setListProducts ] = useState<Array<IProduct>>()
   
@@ -61,7 +64,17 @@ export function Products(props: IServiceProps) {
               <span className="text-3xl font-bold text-gray-900 dark:text-white">
                 {product.price}€
               </span>
-              {
+              { !authContext?.user ?
+
+                  <button className= { `text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ${product.quantity == 0 ? "bg-gray-500 hover:bg-gray-500 dark:bg-gray-500 dark:hover:bg-gray-500 dark:focus:ring-gray-500": " bg-blue-700 hover:bg-blue-800  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"}` }
+                  type="button"
+                  data-ripple-light="true"
+                  >
+                    <Link className="flex items-center" to="/login" >
+                      { product.quantity == 0 ? 'Not Available': 'Add to cart' }
+                    </Link> 
+                  </button>
+                  :
                   <button
                     className= { `text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ${product.quantity == 0 ? "bg-gray-500 hover:bg-gray-500 dark:bg-gray-500 dark:hover:bg-gray-500 dark:focus:ring-gray-500": " bg-blue-700 hover:bg-blue-800  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"}` }
                     onClick={() => addProduct(product.id)} disabled={product.quantity == 0}
